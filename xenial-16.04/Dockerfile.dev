@@ -1,4 +1,15 @@
 FROM umtdg/xenial-16.04:latest
 
 # Install developer tools and some utilization packages
-RUN sudo apt-get install -y build-essential python python3 curl git openssh-server
+RUN sudo apt-get install -y ssh build-essential gcc g++ gdb clang make \
+    ninja-build cmake autoconf automake locales-all \
+    dos2unix rsync tar python
+
+RUN ( \
+    echo 'LogLevel DEBUG2'; \
+    echo 'PermitRootLogin yes'; \
+    echo 'PasswordAuthentication yes'; \
+    echo 'Subsystem sftp /usr/lib/openssh/sftp-server'; \
+  ) | sudo tee -a /etc/ssh/sshd_config_devenv \
+  && sudo mkdir /run/sshd
+
