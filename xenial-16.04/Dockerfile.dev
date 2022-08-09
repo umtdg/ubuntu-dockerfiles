@@ -3,7 +3,7 @@ FROM umtdg/xenial-16.04:latest
 # Install developer tools and some utilization packages
 RUN sudo apt-get install -y ssh build-essential gcc g++ gdb clang make \
     ninja-build cmake autoconf automake locales-all \
-    dos2unix rsync tar python
+    dos2unix rsync tar python git
 
 RUN ( \
     echo 'LogLevel DEBUG2'; \
