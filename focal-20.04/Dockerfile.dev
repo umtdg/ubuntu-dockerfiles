@@ -1,4 +1,0 @@
-FROM umtdg/focal-20.04:latest
-
-# Install developer tools and some utilization packages
-RUN sudo apt-get install -y build-essential python python3 curl git openssh-server

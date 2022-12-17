@@ -1,0 +1,14 @@
+FROM umtdg/ubuntu:20.04
+
+USER root
+
+ARG DEBIAN_FRONTEND=noninteractive
+ENV DEBIAN_FRONTEND noninteractive
+ENV TZ=Turkey
+
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+# Install developer tools and some utilization packages
+RUN apt-get install -y build-essential gcc g++ gdb clang make \
+    ninja-build cmake autoconf automake locales-all \
+    dos2unix rsync tar python3 git

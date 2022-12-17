@@ -1,5 +1,6 @@
-FROM ubuntu:focal
+FROM ubuntu:16.04
 
+ARG DEBIAN_FRONTEND=noninteractive
 ENV DEBIAN_FRONTEND noninteractive
 
 # Install sudo

@@ -1,5 +1,6 @@
-FROM ubuntu:jammy
+FROM ubuntu:18.04
 
+ARG DEBIAN_FRONTEND=noninteractive
 ENV DEBIAN_FRONTEND noninteractive
 
 # Install sudo
