@@ -12,10 +12,19 @@ build() {
     dev=$2
 
     tag="umtdg/ubuntu:$ver"
+    tag_ulak="registry.ulakhaberlesme.com.tr/cinar/epc/ubuntu:$ver"
+
     dockerfile="$ver/Dockerfile"
     if [ "$dev" == "yes" ]; then
         tag="$tag-dev"
+        tag_ulak="$tag_ulak-dev"
         dockerfile="$dockerfile.dev"
+    fi
+
+    if docker images --format '{{.Repository}}:{{.Tag}}' | grep -Pq "^${tag}\$" && [ "$do_ulak" == "yes" ]; then
+        echo -e "Image $tag already exists. Tagging '$tag' -> '$tag_ulak'\n"
+        docker image tag "$tag" "$tag_ulak"
+        return
     fi
 
     [[ -d "$ver" ]] || { echo "Could not found $ver"; exit 1; }
@@ -37,6 +46,8 @@ build_all() {
 
 push() {
     tag="umtdg/ubuntu:$1"
+    [[ "$do_ulak" == "yes" ]] && tag="registry.ulakhaberlesme.com.tr/cinar/epc/ubuntu:$1"
+
     [[ "$2" == "yes" ]] && tag="$tag-dev"
 
     echo -e "Pushing $tag\n"
@@ -69,6 +80,7 @@ version=""
 do_dev="no"
 do_push="no"
 do_push_only="no"
+do_ulak="no"
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
@@ -76,6 +88,7 @@ while [[ $# -gt 0 ]]; do
         -v|--ver|--version) version="$2"; shift 2; ;;
         -p|--push) do_push="yes"; shift; ;;
         -P|--push-only) do_push_only="yes"; shift; ;;
+        -u|--ulak) do_ulak="yes"; shift; ;;
         -h|--help) usage; exit; ;;
         *) shift; ;;
     esac
