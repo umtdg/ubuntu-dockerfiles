@@ -53,6 +53,18 @@ push_all() {
     done
 }
 
+function usage() {
+    echo "Usage:"
+    echo "  $0 [OPTIONS]"
+    echo ""
+    echo "Options:"
+    echo "  -d | --dev | --developer    Build/push developer versions"
+    echo "  -v | --ver | --version      Ubuntu version. One of 16.04, 18.04, 20.04, 22.04"
+    echo "  -p | --push                 Push built images"
+    echo "  -P | --push-only            Push images without building first"
+    echo "  -h | --help                 Show this help"
+}
+
 version=""
 do_dev="no"
 do_push="no"
@@ -61,9 +73,10 @@ do_push_only="no"
 while [[ $# -gt 0 ]]; do
     case "$1" in
         -d|--dev|--developer) do_dev="yes"; shift; ;;
-        -v|--ver|--versions) version="$2"; shift 2; ;;
+        -v|--ver|--version) version="$2"; shift 2; ;;
         -p|--push) do_push="yes"; shift; ;;
         -P|--push-only) do_push_only="yes"; shift; ;;
+        -h|--help) usage; exit; ;;
         *) shift; ;;
     esac
 done
