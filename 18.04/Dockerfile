@@ -4,7 +4,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 ENV DEBIAN_FRONTEND noninteractive
 
 # Install sudo
-RUN apt-get update && apt-get install -y sudo
+RUN apt-get update && apt-get upgrade -y && apt-get install -y sudo
 
 # Add non-root user
 RUN addgroup --gid 1000 devuser
