@@ -5,6 +5,6 @@ ENV DEBIAN_FRONTEND noninteractive
 
 # Install developer tools and some utilization packages
 RUN sudo apt-get install -y build-essential gcc g++ gdb clang make \
-    ninja-build cmake autoconf automake locales-all \
-    dos2unix rsync tar python python3 git
+    ninja-build cmake autoconf automake locales-all dos2unix rsync \
+    tar python python3 git vim iproute2 inetutils-ping dnsutils
 
