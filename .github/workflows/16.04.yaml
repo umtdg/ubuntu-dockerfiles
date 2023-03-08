@@ -1,4 +1,4 @@
-name: 16.04 Image CI
+name: 16.04 Developer Image CI
 
 on:
   push:
@@ -12,6 +12,20 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Get changed Dockerfile
+        uses: tj-actions/changed-files@v35
+        id: changed-dockerfile
+        with:
+          files: |
+            16.04/Dockerfile
+      - name: Get changed Dockerfile.dev
+        uses: tj-actions/changed-files@v35
+        id: changed-dockerfile-dev
+        with:
+          files: |
+            16.04/Dockerfile.dev
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
       - name: Set up Docker Buildx
@@ -21,11 +35,23 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build and push
+      - name: Build and push non developer version
         uses: docker/build-push-action@v4
+        id: build-push-non-dev
+        if: steps.changed-dockerfile.outputs.only_changed == 'true' || steps.changed-dockerfile-dev.outputs.only_changed == 'true'
         with:
           context: .
           platforms: linux/amd64
           push: true
           file: 16.04/Dockerfile
           tags: umtdg/ubuntu:16.04
+      - name: Build and push developer version
+        uses: docker/build-push-action@v4
+        if: steps.build-push-non-dev.outputs.imageid != '' && steps.changed-dockerfile-dev.outputs.only_changed == 'true'
+        with:
+          context: .
+          platforms: linux/amd64
+          push: true
+          file: 16.04/Dockerfile.dev
+          tags: umtdg/ubuntu:16.04-dev
+
