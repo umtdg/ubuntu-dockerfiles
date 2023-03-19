@@ -32,7 +32,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build and push non developer version
+      - name: Build and push Ubuntu 16.04
         uses: docker/build-push-action@v4
         id: build-push-non-dev
         if: steps.changed-dockerfile.outputs.only_changed == 'true' || github.event_name == 'workflow_dispatch'
