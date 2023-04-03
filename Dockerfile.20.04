@@ -13,7 +13,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y sudo
 # Add non-root user
 RUN addgroup --gid 1000 ${USER}
 RUN adduser --gecos "" --uid 1000 --gid 1000 ${USER}
-RUN echo '${USER}:${USER}' | chpasswd
+RUN echo "${USER}:${USER}" | chpasswd
 
 # Add user to sudoers
 RUN echo "$USER ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
