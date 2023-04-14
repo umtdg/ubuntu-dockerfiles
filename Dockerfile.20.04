@@ -4,6 +4,10 @@ ARG USER=devuser
 ENV USER=${USER}
 ENV HOME=/home/${USER}
 
+# Set timezone to prevent dpdk hanging
+ENV TZ="Turkey"
+RUN ln -fs /usr/share/zoneinfo/Turkey /etc/localtime
+
 # Install sudo
 RUN apt-get update && apt-get upgrade -y && apt-get install -y sudo
 
