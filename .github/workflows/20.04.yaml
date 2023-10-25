@@ -43,4 +43,3 @@ jobs:
           push: true
           file: Dockerfile.20.04
           tags: umtdg/ubuntu:20.04
-

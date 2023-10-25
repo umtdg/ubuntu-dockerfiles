@@ -43,4 +43,3 @@ jobs:
           push: true
           file: Dockerfile.22.04
           tags: umtdg/ubuntu:22.04
-

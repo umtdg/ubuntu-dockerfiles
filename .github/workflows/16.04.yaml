@@ -43,4 +43,3 @@ jobs:
           push: true
           file: Dockerfile.16.04
           tags: umtdg/ubuntu:16.04
-
