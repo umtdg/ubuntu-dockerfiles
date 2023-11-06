@@ -5,6 +5,7 @@ ENV USER=${USER}
 ENV HOME=/home/${USER}
 
 ENV TZ=UTC
+RUN ln -sf /usr/share/zoneinfo/UTC /etc/localtime
 
 # Install sudo
 RUN apt-get update && apt-get upgrade -y && apt-get install -y sudo
