@@ -4,11 +4,19 @@ ARG USER=devuser
 ENV USER=${USER}
 ENV HOME=/home/${USER}
 
-ENV TZ=UTC
-
-RUN DEBIAN_FRONTEND=noninteractive apt-get update \
+RUN set -eux; \
+    DEBIAN_FRONTEND=noninteractive apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get upgrade -y \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y sudo
+
+RUN addgroup --gid 1000 ${USER}
+RUN adduser --gecos "" --uid 1000 --gid 1000 ${USER}
+RUN echo "${USER}:${USER}" | chpasswd
+
+RUN echo "$USER ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
+RUN set -eux; \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y \
         build-essential gcc g++ gdb clang make \
         cmake ninja-build autoconf automake \
         locales-all dos2unix rsync tar python3 \
