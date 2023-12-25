@@ -1,5 +1,5 @@
---- docker-entrypoint.sh.orig   2023-12-24 23:54:38.075868693 -0800
-+++ docker-entrypoint.sh        2023-12-24 23:54:42.563889095 -0800
+--- docker-entrypoint.sh.orig	2023-12-24 23:54:38.075868693 -0800
++++ docker-entrypoint.sh	2023-12-24 23:54:42.563889095 -0800
 @@ -1,4 +1,8 @@
  #!/bin/bash
 +
@@ -8,13 +8,13 @@
 +
  set -eo pipefail
  shopt -s nullglob
-
+ 
 @@ -375,7 +379,7 @@
-                        echo
-                fi
-        fi
--       exec "$@"
-+       # exec "$@"
+ 			echo
+ 		fi
+ 	fi
+-	exec "$@"
++	# exec "$@"
  }
-
+ 
  # If we are sourced from elsewhere, don't perform any further actions
