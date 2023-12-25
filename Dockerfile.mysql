@@ -23,7 +23,7 @@ RUN set -eux; \
         git iproute2 inetutils-ping bind9-dnsutils
 
 # patch docker-entrypoint.sh
-COPY mysql-docker-entrypoint.sh /tmp/mysql-docker-entrypoint.patch
+COPY mysql-docker-entrypoint.patch /tmp/mysql-docker-entrypoint.patch
 RUN set -eux; \
     cp /usr/local/bin/docker-entrypoint.sh /tmp/docker-entrypoint.sh \
     && cd /tmp && patch < mysql-docker-entrypoint.patch \
