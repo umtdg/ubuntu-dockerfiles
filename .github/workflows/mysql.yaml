@@ -20,7 +20,9 @@ jobs:
         uses: tj-actions/changed-files@v35
         id: changed-dockerfile
         with:
-          files: Dockerfile.mysql
+          files: |
+            Dockerfile.mysql
+            mysql-docker-entrypoint.patch
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
         if: steps.changed-dockerfile.outputs.any_changed == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'schedule'
