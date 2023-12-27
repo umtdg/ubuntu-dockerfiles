@@ -21,3 +21,10 @@ RUN set -eux; \
         cmake ninja-build autoconf automake \
         locales-all dos2unix rsync tar python3 \
         git iproute2 inetutils-ping bind9-dnsutils
+
+# patch docker-entrypoint.sh
+COPY mysql-docker-entrypoint.patch /tmp/mysql-docker-entrypoint.patch
+RUN set -eux; \
+    cp /usr/local/bin/docker-entrypoint.sh /tmp/docker-entrypoint.sh \
+    && cd /tmp && patch < mysql-docker-entrypoint.patch \
+    && cp /tmp/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh

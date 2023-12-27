@@ -1,4 +1,4 @@
-name: MySQL Image CI
+name: MySQL Image (No entrypoint) CI
 
 on:
   push:
@@ -20,7 +20,9 @@ jobs:
         uses: tj-actions/changed-files@v35
         id: changed-dockerfile
         with:
-          files: Dockerfile.mysql
+          files: |
+            Dockerfile.mysql
+            mysql-docker-entrypoint.patch
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
         if: steps.changed-dockerfile.outputs.any_changed == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'schedule'
@@ -41,5 +43,5 @@ jobs:
           context: .
           platforms: linux/amd64
           push: true
-          file: Dockerfile.mysql
-          tags: umtdg/mysql:8.0.34
+          file: Dockerfile.mysql.noentrypoint
+          tags: umtdg/mysql_noentrypoint:8.0.34
