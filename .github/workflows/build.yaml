@@ -1,0 +1,50 @@
+name: Build Docker images
+
+on:
+  push:
+    branches:
+      - master
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: latest
+            dockerfile: ./Dockerfile
+            image: ubuntu:latest
+          - name: Ubuntu 22.04
+            dockerfile: ./Dockerfile.22.04
+            image: ubuntu:22.04
+          - name: Ubuntu 20.04
+            dockerfile: ./Dockerfile.20.04
+            image: ubuntu:20.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action/@v4
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v4
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push ${{ matrix.name }}
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          platforms: linux/amd64
+          push: true
+          file: ${{ matrix.dockerfile }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.image }}
