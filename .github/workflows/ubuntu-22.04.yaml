@@ -5,7 +5,7 @@ on:
     branches:
       - master
     paths:
-      - Dockerfile
+      - Dockerfile.22.04
       - .github/workflows/ubuntu-22.04.yaml
       - .github/workflows/build.yaml
   schedule:
