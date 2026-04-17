@@ -15,9 +15,9 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name: latest
-            dockerfile: ./Dockerfile
-            image: ubuntu:latest
+          - name: Ubuntu 24.04
+            dockerfile: ./Dockerfile.24.04
+            image: ubuntu:24.04
           - name: Ubuntu 22.04
             dockerfile: ./Dockerfile.22.04
             image: ubuntu:22.04
