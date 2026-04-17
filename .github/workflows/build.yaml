@@ -1,29 +1,21 @@
-name: Build Docker images
+name: Build Docker Image
 
 on:
-  push:
-    branches:
-      - master
-  schedule:
-    - cron: '0 6 * * *'
-  workflow_dispatch:
+  workflow_call:
+    inputs:
+      dockerfile:
+        type: string
+        required: true
+      image:
+        type: string
+        required: true
+      base_image:
+        type: string
+        required: true
 
 jobs:
   docker:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - name: Ubuntu 24.04
-            dockerfile: ./Dockerfile.24.04
-            image: ubuntu:24.04
-          - name: Ubuntu 22.04
-            dockerfile: ./Dockerfile.22.04
-            image: ubuntu:22.04
-          - name: Ubuntu 20.04
-            dockerfile: ./Dockerfile.20.04
-            image: ubuntu:20.04
 
     steps:
       - name: Checkout
@@ -40,11 +32,11 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push ${{ matrix.name }}
+      - name: Build and push ${{ inputs.image }} using base image ${{ inputs.base_image }}
         uses: docker/build-push-action@v4
         with:
           context: .
           platforms: linux/amd64
           push: true
-          file: ${{ matrix.dockerfile }}
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.image }}
+          file: ${{ inputs.dockerfile }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ inputs.image }}

@@ -1,0 +1,22 @@
+name: Ubuntu 20.04
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - Dockerfile
+      - .github/workflows/ubuntu-20.04.yaml
+      - .github/workflows/build.yaml
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+jobs:
+  ubuntu:
+    secrets: inherit
+    uses: ./.github/workflows
+    with:
+      dockerfile: ./Dockerfile
+      image: ubuntu:20.04
+      base_image: ubuntu:20.04
