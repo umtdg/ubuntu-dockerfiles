@@ -15,8 +15,8 @@ on:
 jobs:
   ubuntu:
     secrets: inherit
-    uses: ./.github/workflows
+    uses: ./.github/workflows/build.yaml
     with:
-      dockerfile: ./Dockerfile
+      dockerfile: ./Dockerfile.24.04
       image: ubuntu:24.04
       base_image: ubuntu:24.04
