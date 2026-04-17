@@ -1,6 +1,6 @@
 FROM ubuntu:20.04
 
-ARG USER=devuser
+ARG USER=ubuntu
 ENV USER=${USER}
 ENV HOME=/home/${USER}
 
