@@ -19,4 +19,3 @@ jobs:
     with:
       dockerfile: ./Dockerfile.24.04
       image: ubuntu:24.04
-      base_image: ubuntu:24.04

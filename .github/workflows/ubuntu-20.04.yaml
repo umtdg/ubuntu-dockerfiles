@@ -19,4 +19,3 @@ jobs:
     with:
       dockerfile: ./Dockerfile.20.04
       image: ubuntu:20.04
-      base_image: ubuntu:20.04

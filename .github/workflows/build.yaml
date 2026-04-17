@@ -9,9 +9,6 @@ on:
       image:
         type: string
         required: true
-      base_image:
-        type: string
-        required: true
 
 jobs:
   docker:
@@ -32,7 +29,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push ${{ inputs.image }} using base image ${{ inputs.base_image }}
+      - name: Build and push ${{ inputs.image }}
         uses: docker/build-push-action@v7
         with:
           context: .
